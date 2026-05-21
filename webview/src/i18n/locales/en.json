@@ -266,7 +266,7 @@
       "windowOpacity": {
         "label": "Window Opacity",
         "reset": "Reset",
-        "hint": "Lower opacity to let IDE background show through the chat window. Range: 30% - 100%"
+        "hint": "Lower opacity to let IDE background show through the chat window. Range: 0% - 100%"
       }
     },
     "providers": "Provider Management",

@@ -71,12 +71,12 @@ export function useSettingsThemeSync(): UseSettingsThemeSyncReturn {
     return '';
   });
 
-  // Window opacity configuration (0.3-1.0, default 1.0)
+  // Window opacity configuration (0.0-1.0, default 1.0)
   const [windowOpacity, setWindowOpacity] = useState<number>(() => {
     const saved = localStorage.getItem('windowOpacity');
     const val = saved ? parseFloat(saved) : 1.0;
     const parsed = isNaN(val) ? 1.0 : val;
-    return Math.max(0.3, Math.min(1.0, parsed));
+    return Math.max(0.0, Math.min(1.0, parsed));
   });
 
   // Diff theme configuration
@@ -151,7 +151,7 @@ export function useSettingsThemeSync(): UseSettingsThemeSyncReturn {
 
   // Window opacity handler
   useEffect(() => {
-    const clamped = Math.max(0.3, Math.min(1.0, windowOpacity));
+    const clamped = Math.max(0.0, Math.min(1.0, windowOpacity));
     document.documentElement.style.setProperty('--window-opacity', clamped.toString());
     if (clamped < 1.0) {
       localStorage.setItem('windowOpacity', clamped.toString());

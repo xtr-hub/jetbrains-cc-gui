@@ -645,7 +645,7 @@ const AppearanceTab = ({
           <input
             type="range"
             className={styles.opacitySlider}
-            min={30}
+            min={0}
             max={100}
             step={5}
             value={Math.round(windowOpacity * 100)}
