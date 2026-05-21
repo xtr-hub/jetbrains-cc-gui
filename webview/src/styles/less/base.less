@@ -49,16 +49,8 @@ html {
     overflow: hidden;
     /* 应用字体缩放 - 使用 zoom 属性缩放整个应用，包括所有 px 单位 */
     zoom: var(--font-scale, 1);
-}
-
-/* Plugin theme color layer with opacity control — positioned behind #app content */
-#app::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+    /* Plugin theme background with opacity control — composites on top of html's IDE color */
     background: rgba(var(--bg-chat-rgb, 30, 30, 30), var(--window-opacity, 1));
-    pointer-events: none;
-    z-index: 0;
 }
 
 /* Global Scrollbar Styles - Force Override */
