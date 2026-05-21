@@ -29,9 +29,11 @@ html {
     overflow: hidden;
     height: 100vh;
     position: relative;
+    /* Base layer: IDE background color (the color that shows through when opacity < 100%) */
+    background: var(--bg-ide, #ffffff);
 }
 
-/* Background layer with opacity control -- text/content stays fully opaque */
+/* Plugin theme color layer with opacity control */
 html::before {
     content: '';
     position: absolute;

@@ -21,6 +21,8 @@ export function useThemeInit() {
       try {
         const themeData = JSON.parse(jsonStr);
         const theme = themeData.isDark ? 'dark' : 'light';
+        // Update IDE background layer for transparency compositing
+        document.documentElement.style.setProperty('--bg-ide', themeData.isDark ? '#1e1e1e' : '#ffffff');
         setIdeTheme(theme);
       } catch {
         // Failed to parse IDE theme response
@@ -32,6 +34,8 @@ export function useThemeInit() {
       try {
         const themeData = JSON.parse(jsonStr);
         const theme = themeData.isDark ? 'dark' : 'light';
+        // Update IDE background layer for transparency compositing
+        document.documentElement.style.setProperty('--bg-ide', themeData.isDark ? '#1e1e1e' : '#ffffff');
         setIdeTheme(theme);
       } catch {
         // Failed to parse IDE theme change

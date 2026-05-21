@@ -65,12 +65,13 @@ public class HtmlLoader {
         try {
             boolean isDark = ThemeConfigService.getIdeThemeConfig().get("isDark").getAsBoolean();
             String theme = isDark ? "dark" : "light";
-            String bgColor = ThemeConfigService.getBackgroundColorHex();
+            // IDE panel background color — used as the base layer behind the plugin theme
+            String ideBgColor = ThemeConfigService.getBackgroundColorHex();
 
-            // 1. Modify the <html> tag to add inline styles (anti-flash, overridden by CSS layer later)
+            // 1. Set html tag background to IDE color (the color that shows through at low opacity)
             html = html.replaceFirst(
                 "<html([^>]*)>",
-                "<html$1 style=\"background-color:" + bgColor + ";\">"
+                "<html$1 style=\"background-color:" + ideBgColor + ";\">"
             );
 
             // 2. Modify the <body> tag — leave transparent for CSS transparency layer
@@ -79,8 +80,11 @@ public class HtmlLoader {
                 "<body$1>"
             );
 
-            // 3. Inject a theme variable script after the <head> tag
-            String scriptInjection = "\n    <script>window.__INITIAL_IDE_THEME__ = '" + theme + "';</script>";
+            // 3. Inject theme variable script after the <head> tag
+            String scriptInjection = "\n    <script>"
+                + "window.__INITIAL_IDE_THEME__ = '" + theme + "';"
+                + "document.documentElement.style.setProperty('--bg-ide', '" + ideBgColor + "');"
+                + "</script>";
             int headIndex = html.indexOf("<head>");
             if (headIndex != -1) {
                 int insertPos = headIndex + "<head>".length();
