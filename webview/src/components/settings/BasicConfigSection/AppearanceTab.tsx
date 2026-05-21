@@ -143,6 +143,10 @@ const AppearanceTab = ({
     if (!uiFontConfig || uiFontConfig.mode === 'followEditor') return 'followEditor';
     return 'customFile';
   });
+
+  // Only show opacity slider on Windows (OSR required for transparency)
+  const isWindows = /win/i.test(navigator.platform) || /win/i.test(navigator.userAgent);
+  });
   const [customFontPathDraft, setCustomFontPathDraft] = useState(uiFontConfig?.customFontPath || '');
 
   useEffect(() => {
@@ -633,40 +637,42 @@ const AppearanceTab = ({
         </small>
       </div>
 
-      {/* Window opacity */}
-      <div className={styles.bgColorSection}>
-        <div className={styles.fieldHeader}>
-          <span className="codicon codicon-color-mode" />
-          <span className={styles.fieldLabel}>{t('settings.basic.windowOpacity.label')}</span>
-          <span className={styles.opacityValue}>{Math.round(windowOpacity * 100)}%</span>
-        </div>
+      {/* Window opacity (Windows only — OSR required for transparency) */}
+      {isWindows && (
+        <div className={styles.bgColorSection}>
+          <div className={styles.fieldHeader}>
+            <span className="codicon codicon-color-mode" />
+            <span className={styles.fieldLabel}>{t('settings.basic.windowOpacity.label')}</span>
+            <span className={styles.opacityValue}>{Math.round(windowOpacity * 100)}%</span>
+          </div>
 
-        <div className={styles.opacitySliderRow}>
-          <input
-            type="range"
-            className={styles.opacitySlider}
-            min={0}
-            max={100}
-            step={5}
-            value={Math.round(windowOpacity * 100)}
-            onChange={(e) => onWindowOpacityChange(parseInt(e.target.value, 10) / 100)}
-          />
-          <button
-            className={styles.resetBtn}
-            onClick={() => onWindowOpacityChange(1.0)}
-            disabled={windowOpacity >= 1.0}
-            title={t('settings.basic.windowOpacity.reset')}
-          >
-            <span className="codicon codicon-discard" />
-            {t('settings.basic.windowOpacity.reset')}
-          </button>
-        </div>
+          <div className={styles.opacitySliderRow}>
+            <input
+              type="range"
+              className={styles.opacitySlider}
+              min={0}
+              max={100}
+              step={5}
+              value={Math.round(windowOpacity * 100)}
+              onChange={(e) => onWindowOpacityChange(parseInt(e.target.value, 10) / 100)}
+            />
+            <button
+              className={styles.resetBtn}
+              onClick={() => onWindowOpacityChange(1.0)}
+              disabled={windowOpacity >= 1.0}
+              title={t('settings.basic.windowOpacity.reset')}
+            >
+              <span className="codicon codicon-discard" />
+              {t('settings.basic.windowOpacity.reset')}
+            </button>
+          </div>
 
-        <small className={styles.formHint}>
-          <span className="codicon codicon-info" />
-          <span>{t('settings.basic.windowOpacity.hint')}</span>
-        </small>
-      </div>
+          <small className={styles.formHint}>
+            <span className="codicon codicon-info" />
+            <span>{t('settings.basic.windowOpacity.hint')}</span>
+          </small>
+        </div>
+      )}
     </div>
   );
 };
