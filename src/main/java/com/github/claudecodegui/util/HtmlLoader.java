@@ -68,13 +68,8 @@ public class HtmlLoader {
             // IDE panel background color — used as the base layer behind the plugin theme
             String ideBgColor = ThemeConfigService.getBackgroundColorHex();
 
-            // 1. Set html tag background to IDE color (the color that shows through at low opacity)
-            html = html.replaceFirst(
-                "<html([^>]*)>",
-                "<html$1 style=\"background-color:" + ideBgColor + ";\">"
-            );
-
-            // 2. Modify the <body> tag — leave transparent for CSS transparency layer
+            // 1. Do NOT set inline bg on html — CSS controls it for transparency
+            // 2. Leave body transparent
             html = html.replaceFirst(
                 "<body([^>]*)>",
                 "<body$1>"
@@ -91,7 +86,7 @@ public class HtmlLoader {
                 html = html.substring(0, insertPos) + scriptInjection + html.substring(insertPos);
             }
 
-            LOG.info("Successfully injected IDE theme (inline styles): " + theme + ", background: " + bgColor);
+            LOG.info("Successfully injected IDE theme (CSS variable only): " + theme + ", background: " + ideBgColor);
         } catch (Exception e) {
             LOG.error("Failed to inject IDE theme: " + e.getMessage(), e);
         }

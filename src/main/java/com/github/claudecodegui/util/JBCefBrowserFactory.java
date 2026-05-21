@@ -20,7 +20,7 @@ import org.cef.misc.BoolRef;
  *
  * OSR mode behavior:
  * - macOS: OSR disabled (uses native rendering)
- * - Windows: OSR disabled
+ * - Windows: OSR enabled (required for transparent background support)
  * - Linux/Unix: OSR enabled for IDEA 2023+, disabled for earlier versions
  */
 public final class JBCefBrowserFactory {
@@ -113,8 +113,9 @@ public final class JBCefBrowserFactory {
             // Enable OSR for IDEA 2023+
             return version >= 2023;
         } else if (SystemInfo.isWindows) {
-            // Windows: disable OSR
-            return false;
+            // Windows: enable OSR for transparency support
+            // OSR renders through Swing so transparent backgrounds work correctly
+            return true;
         }
         // Unknown platform, disable OSR by default
         return false;

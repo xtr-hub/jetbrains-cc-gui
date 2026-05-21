@@ -311,8 +311,11 @@ public class WebviewInitializer {
 
             JComponent browserComponent = browser.getComponent();
 
-            // Make browser component transparent so IDE background shows through
+            // Make browser component transparent so IDE background shows through.
+            // In OSR mode (Windows: enabled), this allows Swing transparency.
+            // In non-OSR mode (macOS), this has no effect but is harmless.
             browserComponent.setOpaque(false);
+            browserComponent.setBackground(new Color(0, 0, 0, 0));
 
             // Add drag-and-drop support - get full file paths
             new DropTarget(browserComponent, new DropTargetAdapter() {
