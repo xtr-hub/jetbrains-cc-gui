@@ -51,15 +51,8 @@ public class HtmlLoader {
     /**
      * Inject the IDE theme into the HTML.
      *
-     * Strategy: add inline style attributes on the html tag for anti-flash color.
-     * Body background is left transparent so the CSS html::before transparency layer shows through.
-     *
-     * 1. Modify the &lt;html&gt; tag to add style="background-color:..." for anti-flash
-     * 2. Modify the &lt;body&gt; tag to keep transparent (no background-color injection)
-     * 3. Inject a theme variable script into &lt;head&gt;
-     *
-     * Inline styles on the html tag are overridden by the CSS html::before pseudo-element
-     * (which uses z-index: -1 and the user's saved opacity), ensuring transparency works.
+     * Strategy: inject --bg-ide CSS variable into &lt;head&gt; for transparency compositing.
+     * html and body backgrounds are left transparent in CSS (#app opacity layer shows through).
      */
     private String injectIdeTheme(String html) {
         try {

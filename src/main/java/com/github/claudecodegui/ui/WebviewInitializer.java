@@ -312,8 +312,7 @@ public class WebviewInitializer {
             JComponent browserComponent = browser.getComponent();
 
             // Make browser component transparent so IDE background shows through.
-            // In OSR mode (Windows: enabled), this allows Swing transparency.
-            // In non-OSR mode (macOS), this has no effect but is harmless.
+            // OSR mode (all platforms) renders through Swing so transparency works.
             browserComponent.setOpaque(false);
             browserComponent.setBackground(new Color(0, 0, 0, 0));
 

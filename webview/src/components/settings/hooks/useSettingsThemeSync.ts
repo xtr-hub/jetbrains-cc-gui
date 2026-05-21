@@ -160,10 +160,11 @@ export function useSettingsThemeSync(): UseSettingsThemeSyncReturn {
   // Window opacity handler
   useEffect(() => {
     const clamped = Math.max(0.0, Math.min(1.0, windowOpacity));
-    document.documentElement.style.setProperty('--window-opacity', clamped.toString());
     if (clamped < 1.0) {
+      document.documentElement.style.setProperty('--window-opacity', clamped.toString());
       localStorage.setItem('windowOpacity', clamped.toString());
     } else {
+      document.documentElement.style.removeProperty('--window-opacity');
       localStorage.removeItem('windowOpacity');
     }
   }, [windowOpacity]);
