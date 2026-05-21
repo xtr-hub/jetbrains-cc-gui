@@ -28,8 +28,7 @@ body {
 html {
     overflow: hidden;
     height: 100vh;
-    /* Base layer: IDE background color (the color that shows through when opacity < 100%) */
-    background: var(--bg-ide, #ffffff);
+    background: transparent;
 }
 
 #app {
@@ -49,7 +48,7 @@ html {
     overflow: hidden;
     /* 应用字体缩放 - 使用 zoom 属性缩放整个应用，包括所有 px 单位 */
     zoom: var(--font-scale, 1);
-    /* Plugin theme background with opacity control — composites on top of html's IDE color */
+    /* Plugin theme background with opacity control — transparency reveals IDE background */
     background: rgba(var(--bg-chat-rgb, 30, 30, 30), var(--window-opacity, 1));
 }
 
