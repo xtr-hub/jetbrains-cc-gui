@@ -146,7 +146,6 @@ const AppearanceTab = ({
 
   // Only show opacity slider on Windows (OSR required for transparency)
   const isWindows = /win/i.test(navigator.platform) || /win/i.test(navigator.userAgent);
-  });
   const [customFontPathDraft, setCustomFontPathDraft] = useState(uiFontConfig?.customFontPath || '');
 
   useEffect(() => {
