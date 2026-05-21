@@ -19,7 +19,7 @@ import org.cef.misc.BoolRef;
  * OSR (Off-Screen Rendering) mode based on the platform and IDEA version.
  *
  * OSR mode behavior:
- * - macOS: OSR enabled (required for transparent background support)
+ * - macOS: OSR disabled (uses native rendering)
  * - Windows: OSR enabled (required for transparent background support)
  * - Linux/Unix: OSR enabled for IDEA 2023+, disabled for earlier versions
  */
@@ -105,8 +105,8 @@ public final class JBCefBrowserFactory {
      */
     private static boolean determineOsrMode() {
         if (SystemInfo.isMac) {
-            // macOS: enable OSR for transparency support
-            return true;
+            // macOS: disable OSR (native rendering, transparency not supported)
+            return false;
         } else if (SystemInfo.isLinux || SystemInfo.isUnix) {
             // Linux/Unix: depends on IDEA version
             int version = getIdeaMajorVersion();
