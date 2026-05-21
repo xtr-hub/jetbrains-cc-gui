@@ -51,32 +51,32 @@ public class HtmlLoader {
     /**
      * Inject the IDE theme into the HTML.
      *
-     * Strategy: add inline style attributes directly on HTML tags to ensure the background
-     * color is applied on the very first render frame.
-     * 1. Modify the &lt;html&gt; tag to add style="background-color:..."
-     * 2. Modify the &lt;body&gt; tag to add style="background-color:..."
+     * Strategy: add inline style attributes on the html tag for anti-flash color.
+     * Body background is left transparent so the CSS html::before transparency layer shows through.
+     *
+     * 1. Modify the &lt;html&gt; tag to add style="background-color:..." for anti-flash
+     * 2. Modify the &lt;body&gt; tag to keep transparent (no background-color injection)
      * 3. Inject a theme variable script into &lt;head&gt;
      *
-     * Inline styles are parsed faster than CSS rules, ensuring the correct color appears
-     * on the first CEF render frame.
+     * Inline styles on the html tag are overridden by the CSS html::before pseudo-element
+     * (which uses z-index: -1 and the user's saved opacity), ensuring transparency works.
      */
     private String injectIdeTheme(String html) {
         try {
             boolean isDark = ThemeConfigService.getIdeThemeConfig().get("isDark").getAsBoolean();
             String theme = isDark ? "dark" : "light";
-            // Use the unified color values to ensure consistency with Swing component backgrounds
             String bgColor = ThemeConfigService.getBackgroundColorHex();
 
-            // 1. Modify the <html> tag to add inline styles
+            // 1. Modify the <html> tag to add inline styles (anti-flash, overridden by CSS layer later)
             html = html.replaceFirst(
                 "<html([^>]*)>",
                 "<html$1 style=\"background-color:" + bgColor + ";\">"
             );
 
-            // 2. Modify the <body> tag to add inline styles
+            // 2. Modify the <body> tag — leave transparent for CSS transparency layer
             html = html.replaceFirst(
                 "<body([^>]*)>",
-                "<body$1 style=\"background-color:" + bgColor + ";\">"
+                "<body$1>"
             );
 
             // 3. Inject a theme variable script after the <head> tag

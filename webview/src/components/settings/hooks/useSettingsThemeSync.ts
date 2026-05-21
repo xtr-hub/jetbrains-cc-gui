@@ -22,6 +22,8 @@ export interface UseSettingsThemeSyncReturn {
   setUserMsgColor: (color: string) => void;
   diffTheme: DiffThemeMode;
   setDiffTheme: (theme: DiffThemeMode) => void;
+  windowOpacity: number;
+  setWindowOpacity: (opacity: number) => void;
 }
 
 export function useSettingsThemeSync(): UseSettingsThemeSyncReturn {
@@ -67,6 +69,14 @@ export function useSettingsThemeSync(): UseSettingsThemeSyncReturn {
       return saved;
     }
     return '';
+  });
+
+  // Window opacity configuration (0.3-1.0, default 1.0)
+  const [windowOpacity, setWindowOpacity] = useState<number>(() => {
+    const saved = localStorage.getItem('windowOpacity');
+    const val = saved ? parseFloat(saved) : 1.0;
+    const parsed = isNaN(val) ? 1.0 : val;
+    return Math.max(0.3, Math.min(1.0, parsed));
   });
 
   // Diff theme configuration
@@ -139,6 +149,17 @@ export function useSettingsThemeSync(): UseSettingsThemeSyncReturn {
     applyDiffTheme(diffTheme, ideTheme);
   }, [diffTheme, ideTheme, themePreference]);
 
+  // Window opacity handler
+  useEffect(() => {
+    const clamped = Math.max(0.3, Math.min(1.0, windowOpacity));
+    document.documentElement.style.setProperty('--window-opacity', clamped.toString());
+    if (clamped < 1.0) {
+      localStorage.setItem('windowOpacity', clamped.toString());
+    } else {
+      localStorage.removeItem('windowOpacity');
+    }
+  }, [windowOpacity]);
+
   return {
     themePreference,
     setThemePreference,
@@ -152,5 +173,7 @@ export function useSettingsThemeSync(): UseSettingsThemeSyncReturn {
     setUserMsgColor,
     diffTheme,
     setDiffTheme,
+    windowOpacity,
+    setWindowOpacity,
   };
 }

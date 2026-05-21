@@ -184,6 +184,18 @@ public class ThemeConfigService {
     }
 
     /**
+     * Get a background color with alpha (transparency) channel.
+     * Used to create semi-transparent backgrounds for Swing components.
+     *
+     * @param alpha transparency level (0.0 = fully transparent, 1.0 = fully opaque)
+     * @return the background color with alpha applied
+     */
+    public static Color getBackgroundColorWithAlpha(float alpha) {
+        Color base = getBackgroundColor();
+        return new Color(base.getRed(), base.getGreen(), base.getBlue(), (int) (alpha * 255));
+    }
+
+    /**
      * Get the hex color value corresponding to the current IDE theme.
      * Used for injection into HTML.
      *

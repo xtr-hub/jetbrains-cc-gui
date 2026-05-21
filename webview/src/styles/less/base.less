@@ -18,15 +18,27 @@
 
 body {
     font-family: var(--cc-gui-ui-font-family, 'JetBrains Mono', 'Consolas', monospace);
-    background: var(--bg-chat);
+    background: transparent;
     color: var(--text-primary);
     height: 100vh;
     overflow: hidden;
+    position: relative;
 }
 
 html {
     overflow: hidden;
     height: 100vh;
+    position: relative;
+}
+
+/* Background layer with opacity control -- text/content stays fully opaque */
+html::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--bg-primary-rgb, 30, 30, 30), var(--window-opacity, 1));
+    pointer-events: none;
+    z-index: -1;
 }
 
 #app {

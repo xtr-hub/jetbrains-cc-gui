@@ -68,6 +68,14 @@ export function useThemeInit() {
       document.documentElement.style.setProperty('--color-message-user-bg', savedUserMsgColor);
     }
 
+    // Initialize window opacity (0.3-1.0, default 1.0)
+    const savedOpacity = localStorage.getItem('windowOpacity');
+    const opacity = savedOpacity ? parseFloat(savedOpacity) : 1.0;
+    const clampedOpacity = isNaN(opacity) ? 1.0 : Math.max(0.3, Math.min(1.0, opacity));
+    if (clampedOpacity < 1.0) {
+      document.documentElement.style.setProperty('--window-opacity', clampedOpacity.toString());
+    }
+
     // Apply the user's explicit theme choice (light/dark) first
     const savedTheme = localStorage.getItem('theme');
 
