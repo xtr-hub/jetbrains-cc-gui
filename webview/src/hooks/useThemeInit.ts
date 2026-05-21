@@ -61,9 +61,16 @@ export function useThemeInit() {
 
     // Initialize chat background color (validate hex format before applying)
     const isValidHexColor = (c: string) => /^#[0-9a-fA-F]{6}$/.test(c);
+    const hexToRgb = (hex: string) => {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `${r}, ${g}, ${b}`;
+    };
     const savedChatBgColor = localStorage.getItem('chatBgColor');
     if (savedChatBgColor && isValidHexColor(savedChatBgColor)) {
       document.documentElement.style.setProperty('--bg-chat', savedChatBgColor);
+      document.documentElement.style.setProperty('--bg-chat-rgb', hexToRgb(savedChatBgColor));
     }
 
     // Initialize user message bubble color
