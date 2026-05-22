@@ -19,7 +19,7 @@
 /* Basic config sub-tab selector */
 .basicTabSelector {
   display: flex;
-  background: var(--bg-secondary);
+  background: rgba(var(--bg-secondary-rgb), var(--window-opacity, 1));
   padding: 4px;
   border-radius: 6px;
   border: 1px solid var(--border-secondary);
@@ -46,7 +46,7 @@
   }
 
   &:hover {
-    background: var(--bg-hover);
+    background: rgba(var(--bg-hover-rgb), var(--window-opacity, 1));
   }
 
   &.active {
@@ -96,7 +96,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  background: var(--bg-secondary);
+  background: rgba(var(--bg-secondary-rgb), var(--window-opacity, 1));
   border: 2px solid var(--border-secondary);
   border-radius: 8px;
   cursor: pointer;
@@ -104,7 +104,7 @@
 
   &:hover {
     border-color: var(--border-hover);
-    background: var(--bg-tertiary);
+    background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   }
 
   &.active {
@@ -129,7 +129,7 @@
 
 .themeCard {
   padding: 16px;
-  background: var(--bg-secondary);
+  background: rgba(var(--bg-secondary-rgb), var(--window-opacity, 1));
   border: 2px solid var(--border-secondary);
   border-radius: 8px;
   cursor: pointer;
@@ -327,7 +327,7 @@
   width: 100%;
   max-width: 400px;
   padding: 8px 12px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   color: var(--text-primary);
@@ -347,7 +347,7 @@
   }
 
   option {
-    background: var(--bg-primary);
+    background: rgba(var(--bg-primary-rgb), var(--window-opacity, 1));
     color: var(--text-primary);
   }
 }
@@ -362,7 +362,7 @@
 
 .fontInfoDisplay {
   padding: 8px 12px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   color: var(--text-primary);
@@ -375,7 +375,7 @@
   width: 100%;
   max-width: 400px;
   padding: 8px 12px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   color: var(--text-primary);
@@ -395,7 +395,7 @@
   }
 
   option {
-    background: var(--bg-primary);
+    background: rgba(var(--bg-primary-rgb), var(--window-opacity, 1));
     color: var(--text-primary);
   }
 }
@@ -443,7 +443,7 @@
   flex: 1 1 300px;
   min-width: 200px;
   padding: 8px 12px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   color: var(--text-primary);
@@ -544,7 +544,7 @@
   position: relative;
   width: 44px;
   height: 24px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 12px;
   transition: all 0.2s ease;
@@ -670,7 +670,7 @@
 .hexInput {
   width: 90px;
   padding: 6px 8px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   color: var(--text-primary);
@@ -779,7 +779,7 @@
 .upwardSelectTrigger {
   width: 100%;
   padding: 8px 32px 8px 12px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   color: var(--text-primary);
@@ -826,7 +826,7 @@
   bottom: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: var(--bg-secondary);
+  background: rgba(var(--bg-secondary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
@@ -843,7 +843,7 @@
   transition: background 0.15s;
 
   &:hover {
-    background: var(--bg-tertiary);
+    background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   }
 
   &.selected {
@@ -873,7 +873,7 @@
   max-width: 400px;
   height: 6px;
   border-radius: 3px;
-  background: var(--bg-tertiary);
+  background: rgba(var(--bg-tertiary-rgb), var(--window-opacity, 1));
   border: 1px solid var(--border-secondary);
   appearance: none;
   cursor: pointer;
@@ -885,7 +885,7 @@
     height: 16px;
     border-radius: 50%;
     background: var(--accent-primary);
-    border: 2px solid var(--bg-primary);
+    border: 2px solid rgba(var(--bg-primary-rgb), var(--window-opacity, 1));
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: all 0.15s;
@@ -900,7 +900,7 @@
     height: 16px;
     border-radius: 50%;
     background: var(--accent-primary);
-    border: 2px solid var(--bg-primary);
+    border: 2px solid rgba(var(--bg-primary-rgb), var(--window-opacity, 1));
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
