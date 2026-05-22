@@ -258,6 +258,11 @@
         "custom": "Personalizado",
         "reset": "Redefinir",
         "hint": "Personalize a cor de fundo das suas mensagens. Deixe vazio para seguir o padrão do tema."
+      },
+      "windowOpacity": {
+        "label": "Opacidade da janela",
+        "reset": "Redefinir",
+        "hint": "Reduza a opacidade para deixar o fundo do IDE aparecer através da janela de chat. Intervalo: 0% - 100%"
       }
     },
     "providers": "Gerenciamento de Provedores",
