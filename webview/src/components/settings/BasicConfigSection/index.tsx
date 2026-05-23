@@ -87,6 +87,9 @@ interface BasicConfigSectionProps {
   // Task completion notification configuration
   taskCompletionNotificationEnabled?: boolean;
   onTaskCompletionNotificationEnabledChange?: (enabled: boolean) => void;
+  // Permission dialog timeout configuration
+  permissionDialogTimeoutSeconds?: number;
+  onPermissionDialogTimeoutChange?: (seconds: number) => void;
 }
 
 const BasicConfigSection = (props: BasicConfigSectionProps) => {
@@ -164,6 +167,8 @@ const BasicConfigSection = (props: BasicConfigSectionProps) => {
           onBrowseSound={props.onBrowseSound}
           taskCompletionNotificationEnabled={props.taskCompletionNotificationEnabled}
           onTaskCompletionNotificationEnabledChange={props.onTaskCompletionNotificationEnabledChange}
+          permissionDialogTimeoutSeconds={props.permissionDialogTimeoutSeconds}
+          onPermissionDialogTimeoutChange={props.onPermissionDialogTimeoutChange}
         />
       )}
 

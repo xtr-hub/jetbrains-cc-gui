@@ -57,6 +57,7 @@ const DEFAULT_DARK_USER_MSG = '#005fb8';
 const DEFAULT_LIGHT_USER_MSG = '#0078d4';
 const UI_FONT_SELECT_ID = 'settings-ui-font-select';
 const UI_FONT_CUSTOM_PATH_ID = 'settings-ui-font-custom-path';
+const FOLLOW_IDEA_LANGUAGE = '__follow_idea__';
 
 const NODE_PATH_SECTION_STYLE: React.CSSProperties = { marginTop: 12 };
 
@@ -147,6 +148,11 @@ const AppearanceTab = ({
   // Only show opacity slider on Windows (OSR required for transparency)
   const isWindows = /win/i.test(navigator.platform) || /win/i.test(navigator.userAgent);
   const [customFontPathDraft, setCustomFontPathDraft] = useState(uiFontConfig?.customFontPath || '');
+  const [languageSelection, setLanguageSelection] = useState(() => (
+    localStorage.getItem('languageSelectionMode') === 'followIdea'
+      ? FOLLOW_IDEA_LANGUAGE
+      : (i18n.language || 'zh')
+  ));
 
   useEffect(() => {
     setHexInput(chatBgColor || '');
@@ -164,6 +170,19 @@ const AppearanceTab = ({
     }
     setCustomFontPathDraft(uiFontConfig?.customFontPath || '');
   }, [uiFontConfig]);
+
+  useEffect(() => {
+    const resync = () => {
+      setLanguageSelection(
+        localStorage.getItem('languageSelectionMode') === 'followIdea'
+          ? FOLLOW_IDEA_LANGUAGE
+          : (i18n.language || 'zh')
+      );
+    };
+    resync();
+    window.addEventListener('language-config-applied', resync);
+    return () => window.removeEventListener('language-config-applied', resync);
+  }, [i18n.language]);
 
   const resolvedTheme = useMemo(() => {
     if (theme !== 'system') return theme;
@@ -234,7 +253,6 @@ const AppearanceTab = ({
     return chatBgColor.toLowerCase() === presetColor.toLowerCase();
   };
 
-  const currentLanguage = i18n.language || 'zh';
   const hasSavedCustomFont = Boolean(uiFontConfig?.customFontPath);
   const isCustomUiFontSelected = selectedUiFontOption === 'customFile';
   const isCustomPathEmpty = customFontPathDraft.trim().length === 0;
@@ -275,6 +293,7 @@ const AppearanceTab = ({
   ];
 
   const languageOptions = [
+    { value: FOLLOW_IDEA_LANGUAGE, label: 'settings.basic.language.followIde' },
     { value: 'zh', label: 'settings.basic.language.simplifiedChinese' },
     { value: 'zh-TW', label: 'settings.basic.language.traditionalChinese' },
     { value: 'en', label: 'settings.basic.language.english' },
@@ -289,9 +308,22 @@ const AppearanceTab = ({
 
   const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const language = event.target.value;
+    // Optimistic UI update. Java owns the persisted config and pushes the
+    // authoritative state back via applyIdeaLanguageConfig, which is the
+    // single writer for localStorage language keys.
+    setLanguageSelection(language);
+
+    if (language === FOLLOW_IDEA_LANGUAGE) {
+      if (window.sendToJava) {
+        window.sendToJava('clear_user_language:');
+      }
+      return;
+    }
+
     i18n.changeLanguage(language);
-    localStorage.setItem('language', language);
-    localStorage.setItem('languageManuallySet', 'true');
+    if (window.sendToJava) {
+      window.sendToJava(`set_user_language:${JSON.stringify({ language })}`);
+    }
   };
 
   const handleUiFontSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -364,7 +396,7 @@ const AppearanceTab = ({
         </div>
         <select
           className={styles.languageSelect}
-          value={currentLanguage}
+          value={languageSelection}
           onChange={handleLanguageChange}
         >
           {languageOptions.map((option) => (
